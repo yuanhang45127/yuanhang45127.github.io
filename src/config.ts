@@ -3,7 +3,7 @@ export const profile = {
   nameZh: '刘远航',
   nameEn: 'Yuanhang Liu',
   // 部署前改成你的 GitHub 用户名：决定 Pages 地址与站点仓库链接
-  githubUsername: 'your-github-username',
+  githubUsername: 'yuanhang45127',
   email: '2878765600@qq.com',
   locationZh: '江苏南京',
   locationEn: 'Nanjing, China',
