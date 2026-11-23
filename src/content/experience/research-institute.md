@@ -3,8 +3,8 @@ title: 软件开发工程师（Java / 大模型应用）
 titleEn: Software Engineer (Java / LLM Applications)
 kind: work
 period: 2025.07 – 至今
-org: 中国电子科技集团第二十八研究所（南京）
-orgEn: CETC 28th Research Institute, Nanjing
+org: 某研究所（南京）
+orgEn: A research institute, Nanjing
 order: 1
 highlights:
   - 后端开发（Java / Spring）：负责信息系统业务模块的设计与实现，含 OA 系统等内部平台的模块开发与迭代维护（涉密项目，细节从略）
