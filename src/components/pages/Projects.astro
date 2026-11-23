@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { profile } from '../../config';
+import { ui, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  alternatePath: string;
+}
+const { lang, alternatePath } = Astro.props;
+const t = ui[lang];
+const zh = lang === 'zh';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base
+  lang={lang}
+  title={zh ? `独立项目 · ${profile.nameZh}` : `Side Projects · ${profile.nameEn}`}
+  description={zh ? '独立项目：拼豆统计 PinDou、光伏清洗机器人主控固件 PV-Ctrl V1。' : 'Side projects: PinDou, PV-Ctrl V1 firmware for a PV-cleaning robot.'}
+  active="projects"
+  {alternatePath}
+>
+  <main class="page">
+    <div class="container">
+      <h1 class="page-title">{t['section.projects']}</h1>
+      <p class="page-desc">
+        {zh
+          ? '业余时间做的产品和小工具：从微信小程序到 STM32 固件，长期运行在自己的服务器上。'
+          : 'Products and tools built in my spare time — from a WeChat Mini-Program to STM32 firmware — running long-term on my own servers.'}
+      </p>
+
+      {projects.map((p) => (
+        <article class="project">
+          <h2>{zh ? p.data.title : p.data.titleEn}</h2>
+          <p class="tagline">{zh ? p.data.tagline : p.data.taglineEn}</p>
+          <p class="meta">{zh ? p.data.scope : p.data.scopeEn} · {p.data.period}</p>
+          <ul>
+            {(zh ? p.data.highlights : p.data.highlightsEn).map((h) => <li>{h}</li>)}
+          </ul>
+          <div class="pills">
+            {p.data.stack.map((s) => <span class="pill">{s}</span>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </main>
+</Base>

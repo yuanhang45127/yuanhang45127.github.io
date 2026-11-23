@@ -1,0 +1,173 @@
+/* ===== 学术简约主题 =====
+   白底 · 衬线标题 · 藏青强调 · 细线分隔 · 宽留白
+   换风格 = 替换本文件（内容层不变） */
+
+:root {
+  --accent: #1a3a6b;
+  --text: #1a1a1a;
+  --muted: #5a5a5a;
+  --line: #e3e3e0;
+  --paper: #f7f7f5;
+  --serif: 'Noto Serif SC', 'Songti SC', Georgia, serif;
+  --sans: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+  --maxw: 960px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3, h4 { font-family: var(--serif); line-height: 1.35; color: var(--text); }
+
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+/* ===== 页头 ===== */
+.site-header {
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+}
+.site-header .container {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.brand {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+.brand:hover { text-decoration: none; color: var(--accent); }
+.brand small { font-weight: 400; color: var(--muted); margin-left: 8px; font-size: 13px; }
+.site-nav { display: flex; align-items: baseline; gap: 20px; font-size: 15px; }
+.site-nav a { color: var(--text); }
+.site-nav a:hover { color: var(--accent); text-decoration: none; }
+.site-nav a.active { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+.lang-toggle { color: var(--muted); font-size: 14px; border-left: 1px solid var(--line); padding-left: 20px; }
+
+/* ===== 主页 Hero ===== */
+.hero { padding: 72px 0 48px; border-bottom: 1px solid var(--line); }
+.hero h1 { font-size: 42px; margin: 0 0 6px; }
+.hero .en-name { font-family: var(--serif); color: var(--muted); font-size: 18px; margin: 0 0 18px; }
+.hero .tagline { font-size: 19px; color: var(--accent); font-weight: 600; margin: 0 0 20px; }
+.hero .bio { max-width: 720px; color: var(--text); margin: 0 0 28px; }
+.hero .actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn {
+  display: inline-block;
+  border: 1px solid var(--accent);
+  padding: 8px 22px;
+  font-size: 15px;
+  font-family: var(--sans);
+}
+.btn.primary { background: var(--accent); color: #fff; }
+.btn.primary:hover { background: #14305a; text-decoration: none; }
+.btn.ghost { color: var(--accent); background: transparent; }
+.btn.ghost:hover { background: var(--paper); text-decoration: none; }
+
+/* ===== 导览卡 ===== */
+.triptych { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 40px 0; }
+.triptych a.card {
+  display: block;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  padding: 22px;
+  color: var(--text);
+  background: #fff;
+}
+.triptych a.card:hover { background: var(--paper); text-decoration: none; }
+.triptych h3 { margin: 0 0 8px; font-size: 19px; }
+.triptych p { margin: 0; color: var(--muted); font-size: 14px; }
+.triptych .go { display: inline-block; margin-top: 12px; font-size: 14px; color: var(--accent); }
+
+/* ===== 页内小节 ===== */
+main.page { padding: 48px 0 64px; }
+.page-title { font-size: 32px; margin: 0 0 8px; }
+.page-desc { color: var(--muted); margin: 0 0 36px; max-width: 720px; }
+.section-label {
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin: 40px 0 16px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+.section-label:first-of-type { margin-top: 0; }
+
+/* ===== 条目（科研/工作/教育通用） ===== */
+.entry { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.entry:last-child { border-bottom: none; }
+.entry-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline; }
+.entry h3 { margin: 0; font-size: 19px; }
+.entry .period { color: var(--muted); font-size: 14px; white-space: nowrap; }
+.entry .meta { color: var(--accent); font-size: 14px; margin: 4px 0 8px; }
+.entry ul { margin: 8px 0 0; padding-left: 20px; }
+.entry li { margin: 4px 0; }
+.entry .detail { color: var(--muted); font-size: 14px; margin: 4px 0 0; }
+
+/* ===== 申博方向条 ===== */
+.phd-strip {
+  background: var(--paper);
+  border-left: 3px solid var(--accent);
+  padding: 14px 18px;
+  font-family: var(--serif);
+  font-size: 16px;
+}
+
+/* ===== 项目页 ===== */
+.project {
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  padding: 26px;
+  margin-bottom: 28px;
+}
+.project h2 { margin: 0 0 4px; font-size: 24px; }
+.project .tagline { color: var(--accent); font-size: 15px; margin: 0 0 4px; font-weight: 600; }
+.project .meta { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+.project ul { margin: 0 0 16px; padding-left: 20px; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  padding: 2px 12px;
+  border-radius: 12px;
+}
+
+/* ===== CV 下载条 ===== */
+.cv-actions { display: flex; gap: 14px; margin: 0 0 40px; flex-wrap: wrap; }
+
+/* ===== 页脚 ===== */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 0 40px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.site-footer .container { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+/* ===== 响应式 ===== */
+@media (max-width: 760px) {
+  .triptych { grid-template-columns: 1fr; }
+  .hero { padding: 48px 0 32px; }
+  .hero h1 { font-size: 32px; }
+  .site-header .container { flex-direction: column; gap: 10px; }
+  .entry-head { flex-direction: column; gap: 2px; }
+}

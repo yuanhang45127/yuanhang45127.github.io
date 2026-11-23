@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import { profile } from '../../config';
+import { ui, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  alternatePath: string;
+}
+const { lang, alternatePath } = Astro.props;
+const t = ui[lang];
+const base = import.meta.env.BASE_URL;
+const prefix = lang === 'en' ? 'en/' : '';
+const name = lang === 'zh' ? profile.nameZh : profile.nameEn;
+const otherName = lang === 'zh' ? profile.nameEn : profile.nameZh;
+
+const cards = lang === 'zh'
+  ? [
+      { href: 'research/', title: '科研', desc: '电离层时空预测模型部署于中国气象局业务系统；点云感知毕业论文获 EI 收录。', go: '查看科研经历 →' },
+      { href: 'work/', title: '工作', desc: '中国电科二十八所软件开发：Java / Spring 后端、RAG 知识问答、Agent 工具调用。', go: '查看工作经历 →' },
+      { href: 'projects/', title: '独立项目', desc: '拼豆统计 PinDou（微信小程序 + 网页版）与光伏清洗机器人 STM32 主控固件。', go: '查看独立项目 →' },
+    ]
+  : [
+      { href: 'research/', title: 'Research', desc: 'Ionospheric forecasting deployed at the China Meteorological Administration; EI-indexed LiDAR perception thesis.', go: 'Research →' },
+      { href: 'work/', title: 'Work', desc: 'Software engineering at CETC 28th Research Institute: Java / Spring backends, RAG knowledge Q&A, agent tool calling.', go: 'Work →' },
+      { href: 'projects/', title: 'Side Projects', desc: 'PinDou (WeChat Mini-Program + web) and the STM32 controller firmware for a PV-cleaning robot.', go: 'Projects →' },
+    ];
+---
+
+<Base
+  lang={lang}
+  title={`${name} · ${lang === 'zh' ? profile.taglineZh : profile.taglineEn}`}
+  description={lang === 'zh' ? profile.bioZh : profile.bioEn}
+  active="home"
+  {alternatePath}
+>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>{name}</h1>
+        <p class="en-name">{otherName}</p>
+        <p class="tagline">{lang === 'zh' ? profile.taglineZh : profile.taglineEn}</p>
+        <p class="bio">{lang === 'zh' ? profile.bioZh : profile.bioEn}</p>
+        <div class="actions">
+          <a class="btn primary" href={`${base}${prefix}cv/`}>{t['home.resume']}</a>
+          <a class="btn ghost" href={`${base}resume-${lang}.pdf`}>{t['home.cvDownload']}</a>
+        </div>
+      </div>
+    </section>
+    <section class="container triptych">
+      {cards.map((c) => (
+        <a class="card" href={`${base}${prefix}${c.href}`}>
+          <h3>{c.title}</h3>
+          <p>{c.desc}</p>
+          <span class="go">{c.go}</span>
+        </a>
+      ))}
+    </section>
+  </main>
+</Base>

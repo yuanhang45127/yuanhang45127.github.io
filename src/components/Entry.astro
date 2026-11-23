@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  period?: string;
+  meta?: string;
+  highlights?: string[];
+  detail?: string;
+}
+const { title, period, meta, highlights = [], detail } = Astro.props;
+---
+
+<div class="entry">
+  <div class="entry-head">
+    <h3>{title}</h3>
+    {period && <span class="period">{period}</span>}
+  </div>
+  {meta && <p class="meta">{meta}</p>}
+  {detail && <p class="detail">{detail}</p>}
+  {highlights.length > 0 && (
+    <ul>
+      {highlights.map((h) => <li>{h}</li>)}
+    </ul>
+  )}
+</div>

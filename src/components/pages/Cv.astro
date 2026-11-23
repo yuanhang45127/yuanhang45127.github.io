@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Entry from '../Entry.astro';
+import { profile } from '../../config';
+import { ui, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  alternatePath: string;
+}
+const { lang, alternatePath } = Astro.props;
+const t = ui[lang];
+const zh = lang === 'zh';
+const base = import.meta.env.BASE_URL;
+
+const exp = await getCollection('experience');
+const education = exp.filter((e) => e.data.kind === 'education').sort((a, b) => a.data.order - b.data.order);
+const work = exp.filter((e) => e.data.kind === 'work').sort((a, b) => a.data.order - b.data.order);
+const awards = exp.filter((e) => e.data.kind === 'award').sort((a, b) => a.data.order - b.data.order);
+const skills = exp.filter((e) => e.data.kind === 'skill').sort((a, b) => a.data.order - b.data.order);
+const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base
+  lang={lang}
+  title={zh ? `简历 · ${profile.nameZh}` : `CV · ${profile.nameEn}`}
+  description={zh ? '刘远航的在线简历：教育背景、工作经历、科研与项目经历、竞赛获奖与技能。' : 'CV of Yuanhang Liu: education, experience, research, awards, and skills.'}
+  active="cv"
+  {alternatePath}
+>
+  <main class="page">
+    <div class="container">
+      <h1 class="page-title">{t['nav.cv']}</h1>
+      <p class="page-desc">{zh ? profile.taglineZh : profile.taglineEn}</p>
+
+      <div class="cv-actions">
+        <a class="btn primary" href={`${base}resume-zh.pdf`}>{t['cv.downloadZh']}</a>
+        <a class="btn ghost" href={`${base}resume-en.pdf`}>{t['cv.downloadEn']}</a>
+      </div>
+
+      <h2 class="section-label">{t['cv.education']}</h2>
+      {education.map((e) => (
+        <Entry
+          title={zh ? e.data.title : e.data.titleEn}
+          period={e.data.period}
+          meta={zh ? e.data.org : e.data.orgEn}
+          detail={zh ? e.data.detail : e.data.detailEn}
+        />
+      ))}
+
+      <h2 class="section-label">{t['cv.work']}</h2>
+      {work.map((e) => (
+        <Entry
+          title={zh ? e.data.title : e.data.titleEn}
+          period={e.data.period}
+          meta={zh ? e.data.org : e.data.orgEn}
+          highlights={zh ? e.data.highlights : e.data.highlightsEn}
+        />
+      ))}
+
+      <h2 class="section-label">{t['cv.research']}</h2>
+      {research.map((e) => (
+        <Entry
+          title={zh ? e.data.title : e.data.titleEn}
+          period={e.data.period}
+          meta={`${zh ? e.data.org : e.data.orgEn} · ${zh ? e.data.role : e.data.roleEn}`}
+          highlights={zh ? e.data.highlights : e.data.highlightsEn}
+        />
+      ))}
+
+      <h2 class="section-label">{t['cv.awards']}</h2>
+      {awards.map((e) => (
+        <Entry
+          title={zh ? e.data.title : e.data.titleEn}
+          period={e.data.period}
+          detail={zh ? e.data.detail : e.data.detailEn}
+        />
+      ))}
+
+      <h2 class="section-label">{t['cv.skills']}</h2>
+      {skills.map((e) => {
+        const items = zh ? e.data.highlights : e.data.highlightsEn;
+        return (
+          <p style="margin: 6px 0;">
+            <strong>{zh ? e.data.title : e.data.titleEn}</strong>
+            <span style="color: var(--muted);"> — {items.join(zh ? '、' : ', ')}</span>
+          </p>
+        );
+      })}
+    </div>
+  </main>
+</Base>

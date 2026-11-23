@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Entry from '../Entry.astro';
+import { profile } from '../../config';
+import { ui, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  alternatePath: string;
+}
+const { lang, alternatePath } = Astro.props;
+const t = ui[lang];
+const zh = lang === 'zh';
+
+const all = await getCollection('experience');
+const work = all.filter((e) => e.data.kind === 'work').sort((a, b) => a.data.order - b.data.order);
+const skills = all.filter((e) => e.data.kind === 'skill').sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base
+  lang={lang}
+  title={zh ? `工作 · ${profile.nameZh}` : `Work · ${profile.nameEn}`}
+  description={zh ? '工作经历与技能栈：Java / Spring、RAG、Agent、时空数据挖掘。' : 'Work experience and skills: Java / Spring, RAG, agents, spatiotemporal data mining.'}
+  active="work"
+  {alternatePath}
+>
+  <main class="page">
+    <div class="container">
+      <h1 class="page-title">{t['section.work']}</h1>
+      <p class="page-desc">
+        {zh
+          ? '现于中国电科二十八所从事软件开发与大模型应用研发；此前完成国科大硕士（保研）与苏大本科（法学双学位）。'
+          : 'Software engineering and LLM application R&D at CETC 28th Research Institute; M.Sc. from UCAS and B.Eng. (with an LL.B. minor) from Soochow University.'}
+      </p>
+
+      <h2 class="section-label">{zh ? '工作经历' : 'Experience'}</h2>
+      {work.map((e) => (
+        <Entry
+          title={zh ? e.data.title : e.data.titleEn}
+          period={e.data.period}
+          meta={zh ? e.data.org : e.data.orgEn}
+          highlights={zh ? e.data.highlights : e.data.highlightsEn}
+        />
+      ))}
+
+      <h2 class="section-label">{t['cv.skills']}</h2>
+      {skills.map((e) => {
+        const items = zh ? e.data.highlights : e.data.highlightsEn;
+        return (
+          <p style="margin: 6px 0;">
+            <strong>{zh ? e.data.title : e.data.titleEn}</strong>
+            <span style="color: var(--muted);"> — {items.join(zh ? '、' : ', ')}</span>
+          </p>
+        );
+      })}
+    </div>
+  </main>
+</Base>

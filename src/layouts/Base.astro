@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import { profile } from '../config';
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  active: 'home' | 'research' | 'work' | 'projects' | 'cv';
+  alternatePath: string;
+}
+
+const { lang, title, description, active, alternatePath } = Astro.props;
+const t = ui[lang];
+const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL;
+const nav = [
+  { key: 'home', href: '', label: t['nav.home'] },
+  { key: 'research', href: 'research/', label: t['nav.research'] },
+  { key: 'work', href: 'work/', label: t['nav.work'] },
+  { key: 'projects', href: 'projects/', label: t['nav.projects'] },
+  { key: 'cv', href: 'cv/', label: t['nav.cv'] },
+] as const;
+---
+
+<!doctype html>
+<html lang={lang === 'zh' ? 'zh-CN' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href={`${base}${lang === 'en' ? 'en/' : ''}`}>
+          {lang === 'zh' ? profile.nameZh : profile.nameEn}
+          <small>{lang === 'zh' ? profile.nameEn : profile.nameZh}</small>
+        </a>
+        <nav class="site-nav">
+          {nav.map((item) => (
+            <a
+              href={`${base}${lang === 'en' ? 'en/' : ''}${item.href}`}
+              class={active === item.key ? 'active' : ''}
+            >
+              {item.label}
+            </a>
+          ))}
+          <a class="lang-toggle" href={`${base}${alternatePath}`}>{t['nav.toggle']}</a>
+        </nav>
+      </div>
+    </header>
+    <slot />
+    <footer class="site-footer">
+      <div class="container">
+        <span>© {year} {lang === 'zh' ? profile.nameZh : profile.nameEn} · {lang === 'zh' ? profile.locationZh : profile.locationEn}</span>
+        <span>
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          {' · '}
+          <a href={`https://github.com/${profile.githubUsername}`}>GitHub</a>
+          {' · '}
+          {t['footer.builtWith']}
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
