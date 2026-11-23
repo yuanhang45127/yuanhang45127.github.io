@@ -2,3 +2,4 @@ node_modules/
 dist/
 .superpowers/
 .astro/
+HANDOFF.md
