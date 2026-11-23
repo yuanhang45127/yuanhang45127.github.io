@@ -24,12 +24,25 @@ npm run build    # 产物在 dist/
 
 改完 `git push`，GitHub Actions 自动构建部署，约 1 分钟上线。
 
-## 首次部署到 GitHub Pages
+## 部署
 
-1. 把 `src/config.ts` 的 `githubUsername` 改成你的 GitHub 用户名；把 `astro.config.mjs` 的 `site` 改成 `https://<用户名>.github.io`。
-2. 在 GitHub 新建仓库（如 `personal-site`），push 本仓库代码。
-3. 仓库 Settings → Pages → Source 选 **GitHub Actions**。
-4. push 一次提交（或手动运行 Actions），部署完成后访问 `https://<用户名>.github.io/`。
+一次 `git push`，GitHub Actions 自动部署到**两处**（见 `.github/workflows/deploy.yml`）：
+
+1. **47 服务器（主站）**：`https://me.obsidianlyh.top` —— nginx 静态托管 `/opt/personal-site`（站点配置 `/etc/nginx/sites-available/personal-site`，泛域名证书 `*.obsidianlyh.top`）
+2. **GitHub Pages（镜像）**：`https://<用户名>.github.io/` —— 需先在仓库 Settings → Pages → Source 选 **GitHub Actions**
+
+### GitHub 仓库需要的 secrets（Settings → Secrets and variables → Actions）
+
+| Secret | 值 |
+|--------|-----|
+| `SERVER_HOST` | `47.120.76.240` |
+| `SERVER_USER` | `root` |
+| `SERVER_PATH` | `/opt/personal-site` |
+| `SERVER_SSH_KEY` | 本机 `~/.ssh/github-actions-personal-site` 的完整内容（含首尾两行） |
+
+### DNS
+
+`me.obsidianlyh.top` 需一条 A 记录：`me` → `47.120.76.240`（阿里云 DNS 控制台）。
 
 ## 换视觉风格
 
