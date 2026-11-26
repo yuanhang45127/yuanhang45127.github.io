@@ -55,6 +55,7 @@ jobs:
           path: dist
       - name: 加载部署密钥（自动清理 \r + 格式校验）
         run: |
+          mkdir -p "$HOME/.ssh" && chmod 700 "$HOME/.ssh"
           printf '%s\n' "${{ secrets.SERVER_SSH_KEY }}" | tr -d '\r' > "$HOME/.ssh/deploy_key"
           chmod 600 "$HOME/.ssh/deploy_key"
           ssh-keygen -y -f "$HOME/.ssh/deploy_key" >/dev/null 2>&1 || {
