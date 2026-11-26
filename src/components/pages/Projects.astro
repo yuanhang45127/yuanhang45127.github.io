@@ -18,7 +18,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 <Base
   lang={lang}
   title={zh ? `独立项目 · ${profile.nameZh}` : `Side Projects · ${profile.nameEn}`}
-  description={zh ? '独立项目：拼豆统计 PinDou、光伏清洗机器人主控固件 PV-Ctrl V1。' : 'Side projects: PinDou, PV-Ctrl V1 firmware for a PV-cleaning robot.'}
+  description={zh ? '独立项目：Paper Atlas 论文日报、拼豆统计 PinDou、光伏清洗机器人主控固件 PV-Ctrl V1。' : 'Side projects: Paper Atlas daily arXiv digest, PinDou, PV-Ctrl V1 firmware for a PV-cleaning robot.'}
   active="projects"
   {alternatePath}
 >
@@ -35,7 +35,15 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
         <article class="project">
           <h2>{zh ? p.data.title : p.data.titleEn}</h2>
           <p class="tagline">{zh ? p.data.tagline : p.data.taglineEn}</p>
-          <p class="meta">{zh ? p.data.scope : p.data.scopeEn} · {p.data.period}</p>
+          <p class="meta">
+            {zh ? p.data.scope : p.data.scopeEn} · {p.data.period}
+            {p.data.link && (
+              <>
+                {' · '}
+                <a href={p.data.link}>{p.data.link.replace(/^https?:\/\//, '')} →</a>
+              </>
+            )}
+          </p>
           <ul>
             {(zh ? p.data.highlights : p.data.highlightsEn).map((h) => <li>{h}</li>)}
           </ul>
